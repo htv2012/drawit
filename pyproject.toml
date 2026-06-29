@@ -9,13 +9,18 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "click>=8.4.2",
-    "graphviz>=0.21",
+    "drawtree>=0.1.2",
 ]
 
 [project.scripts]
 drawit = "drawit:main"
-drawit-bintree = "drawit.bintree:main"
 
 [build-system]
 requires = ["uv_build>=0.9.21,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipython>=9.15.0",
+    "ruff>=0.15.20",
+]
