@@ -1,7 +1,7 @@
 [project]
 name = "drawit"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Draw a binary tree"
 readme = "README.md"
 authors = [
     { name = "Hai Vu", email = "haivu2004@gmail.com" }
