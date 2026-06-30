@@ -2,7 +2,6 @@ import collections
 import io
 import itertools
 import json
-import pathlib
 import shutil
 import subprocess
 import tempfile
@@ -10,6 +9,7 @@ import webbrowser
 from typing import Optional
 
 import click
+import drawtree
 
 
 class TreeNode:
@@ -100,13 +100,13 @@ def build_mermaid_script(root: Optional[TreeNode]):
     return buf.getvalue()
 
 
-@click.command
-@click.argument("seq", nargs=-1)
-def main(seq):
-    mermaid_cli = shutil.which("mmdc")
-    if mermaid_cli is None:
-        raise SystemExit("Please install mermaid-cli")
+def show_tree_as_text(seq):
+    nodes = ",".join("#" if tok == "null" else tok for tok in seq)
+    text = "{%s}" % nodes
+    drawtree.draw_level_order(text)
 
+
+def show_tree_as_pic(seq):
     # build the binary tree
     seq = [json.loads(x) for x in seq]
     root = build_tree(seq)
@@ -123,7 +123,7 @@ def main(seq):
     png_path.close()
 
     subprocess.run(
-        [mermaid_cli, "--input", script_path.name, "--output", png_path.name],
+        ["mmdc", "--input", script_path.name, "--output", png_path.name],
         capture_output=True,
         text=True,
         check=True,
@@ -133,3 +133,18 @@ def main(seq):
     print(script_path.name)
     print(png_path.name)
     webbrowser.open(f"file://{png_path.name}")
+
+
+@click.command
+@click.option(
+    "-f",
+    "--format",
+    type=click.Choice(["text", "pic"], case_sensitive=False),
+    default="pic",
+)
+@click.argument("seq", nargs=-1)
+def main(format, seq):
+    if format == "pic" and shutil.which("mmdc"):
+        show_tree_as_pic(seq)
+    else:
+        show_tree_as_text(seq)

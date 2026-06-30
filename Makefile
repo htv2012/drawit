@@ -10,7 +10,7 @@
 	test \
 
 ### Default target(s)
-all: test run
+all: run
 
 ### Clean up generated files
 clean:
@@ -41,8 +41,7 @@ rename:
 
 ### Run the project
 run: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz --version
+	uv run drawit 1 2 3 null null 4 5 6
 
 ### Run unit tests
 test: lint
