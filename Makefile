@@ -10,7 +10,7 @@
 	test \
 
 ### Default target(s)
-all: run
+all: test run
 
 ### Clean up generated files
 clean:
@@ -45,5 +45,5 @@ run: lint
 
 ### Run unit tests
 test: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run pytest -vv
+	uv run pytest -vv
 
