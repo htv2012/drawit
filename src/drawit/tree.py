@@ -19,9 +19,6 @@ def build_tree(seq):
     if not seq:
         return None
 
-    if not seq:
-        return None
-
     sides = itertools.cycle(["left", "right"])
     seq = iter(seq)
     root = _build(next(seq))
