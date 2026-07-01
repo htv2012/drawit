@@ -52,5 +52,5 @@ def bfs(root: Optional[TreeNode]):
         que.append((node.right))
 
 
-def build_id(node: Optional[TreeNode]) -> str:
+def build_id(node: TreeNode) -> str:
     return f"node_{node.val}"

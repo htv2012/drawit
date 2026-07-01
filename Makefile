@@ -30,6 +30,7 @@ lint:
 	uv tool run ruff check --select I --fix .
 	uv tool run ruff format .
 	uv tool run ruff check . --fix
+	uv tool run ty check .
 
 ### Open a Python shell
 py:
