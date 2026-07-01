@@ -30,6 +30,7 @@ lint:
 	uv tool run ruff check --select I --fix .
 	uv tool run ruff format .
 	uv tool run ruff check . --fix
+	uv tool run ty check .
 
 ### Open a Python shell
 py:
@@ -41,10 +42,9 @@ rename:
 
 ### Run the project
 run: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz --version
+	uv run drawit 1 2 3 null null 4 5 6
 
 ### Run unit tests
 test: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run pytest -vv
+	uv run pytest -vv
 
