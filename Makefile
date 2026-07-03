@@ -42,7 +42,7 @@ rename:
 
 ### Run the project
 run: lint
-	uv run drawit 1 2 3 null null 4 5 6
+	uv run drawtree 1 2 3 null null 4 5 6
 
 ### Run unit tests
 test: lint

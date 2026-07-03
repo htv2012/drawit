@@ -8,7 +8,6 @@ requires-python = ">=3.13"
 dependencies = ["click>=8.4.2", "drawtree>=0.1.2", "graphviz>=0.21"]
 
 [project.scripts]
-drawit = "drawit:main"
 drawtree = "drawit.drawtree:main"
 
 [build-system]
