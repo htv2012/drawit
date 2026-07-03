@@ -61,12 +61,8 @@ def draw_tree_using_networkx(root: TreeNode, filename: str = "binary_tree.png"):
     fig = plt.figure(figsize=(6, 4))
 
     # Draw the networkx graph
-    specs = build_drawing_specifications(root)
-    nx.draw(G, pos, labels=labels, with_labels=True, **specs)
-
-    # Enforce .png extension if missing
-    if not filename.endswith(".png"):
-        filename += ".png"
+    specifications = build_drawing_specifications(root)
+    nx.draw(G, pos, labels=labels, with_labels=True, **specifications)
 
     # Save directly to the filesystem
     plt.savefig(filename, format="png", bbox_inches="tight", dpi=300)
