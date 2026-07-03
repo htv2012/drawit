@@ -12,6 +12,7 @@ import drawtree
 from graphviz import Digraph
 
 from .tree import TreeNode, bfs, build_id, build_tree
+from .version import __version__
 
 
 def display_png_file(path: str):
@@ -106,10 +107,7 @@ def add_node_edges(graph: Digraph, node: TreeNode):
         add_node_edges(graph, node.right)
 
 
-def build_graph(root: Optional[TreeNode]) -> Optional[Digraph]:
-    if root is None:
-        return None
-
+def build_graph(root: TreeNode) -> Digraph:
     graph = Digraph()
     graph.attr("node", shape="circle")
     add_node_edges(graph, root)
@@ -130,22 +128,22 @@ def draw_tree_using_graphviz(seq: list):
     root = build_tree(seq)
     graph = build_graph(root)
 
-    if graph is None:
-        print("empty tree")
-    else:
-        out_file = tempfile.NamedTemporaryFile(delete=False)
-        out_file.close()
-        out_path = f"{out_file.name}.png"
+    out_file = tempfile.NamedTemporaryFile(delete=False)
+    out_file.close()
+    out_path = f"{out_file.name}.png"
 
-        graph.render(filename=out_file.name, format="png", cleanup=True)
-        display_png_file(out_path)
+    graph.render(filename=out_file.name, format="png", cleanup=True)
+    display_png_file(out_path)
 
 
 @click.command
+@click.version_option(__version__)
 @click.argument("seq", nargs=-1)
 def main(seq):
     seq = normalize_sequence(seq)
-    if shutil.which("mmdc"):
+    if not seq:
+        print("Empty tree")
+    elif shutil.which("mmdc"):
         draw_tree_using_mermaid(seq)
     elif shutil.which("dot"):
         draw_tree_using_graphviz(seq)
