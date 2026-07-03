@@ -107,10 +107,7 @@ def add_node_edges(graph: Digraph, node: TreeNode):
         add_node_edges(graph, node.right)
 
 
-def build_graph(root: Optional[TreeNode]) -> Optional[Digraph]:
-    if root is None:
-        return None
-
+def build_graph(root: TreeNode) -> Digraph:
     graph = Digraph()
     graph.attr("node", shape="circle")
     add_node_edges(graph, root)
