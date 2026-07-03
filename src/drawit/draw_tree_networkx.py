@@ -13,7 +13,7 @@ from .tree import TreeNode, build_tree, max_depth
 from .version import __version__
 
 
-def get_drawing_size(root: TreeNode) -> dict:
+def build_drawing_specifications(root: TreeNode) -> dict:
     depth = max_depth(root)
     node_size = 800
     font_size = 10
@@ -24,7 +24,9 @@ def get_drawing_size(root: TreeNode) -> dict:
         node_size = 100
         font_size = 3
 
-    return {"node_size": node_size, "font_size": font_size}
+    return dict(
+        node_size=node_size, font_size=font_size, node_color="DodgerBlue", arrows=True
+    )
 
 
 def draw_tree_using_networkx(root: TreeNode, filename: str = "binary_tree.png"):
@@ -59,16 +61,8 @@ def draw_tree_using_networkx(root: TreeNode, filename: str = "binary_tree.png"):
     fig = plt.figure(figsize=(6, 4))
 
     # Draw the networkx graph
-    draw_size = get_drawing_size(root)
-    nx.draw(
-        G,
-        pos,
-        labels=labels,
-        with_labels=True,
-        node_color="DodgerBlue",
-        arrows=False,
-        **draw_size,
-    )
+    specs = build_drawing_specifications(root)
+    nx.draw(G, pos, labels=labels, with_labels=True, **specs)
 
     # Enforce .png extension if missing
     if not filename.endswith(".png"):
