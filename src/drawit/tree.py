@@ -51,3 +51,11 @@ def bfs(root: Optional[TreeNode]):
 
 def build_id(node: TreeNode) -> str:
     return f"node_{node.val}"
+
+
+def max_depth(root: Optional[TreeNode]) -> int:
+    if root is None:
+        return 0
+    left_depth = max_depth(root.left) + 1
+    right_depth = max_depth(root.right) + 1
+    return max(left_depth, right_depth)
