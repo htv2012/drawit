@@ -12,29 +12,29 @@ from graphviz import Digraph
 from .tree import TreeNode, build_tree
 
 
-def add_node_edges(dot: Digraph, node: TreeNode):
+def add_node_edges(graph: Digraph, node: TreeNode):
     node_id = str(id(node))
-    dot.node(node_id, label=str(node.val))
+    graph.node(node_id, label=str(node.val))
 
     if node.left:
         left_id = str(id(node.left))
-        dot.edge(node_id, left_id)
-        add_node_edges(dot, node.left)
+        graph.edge(node_id, left_id)
+        add_node_edges(graph, node.left)
 
     if node.right:
         right_id = str(id(node.right))
-        dot.edge(node_id, right_id)
-        add_node_edges(dot, node.right)
+        graph.edge(node_id, right_id)
+        add_node_edges(graph, node.right)
 
 
-def draw(root: Optional[TreeNode]) -> Optional[Digraph]:
+def build_graph(root: Optional[TreeNode]) -> Optional[Digraph]:
     if root is None:
         return None
 
-    dot = Digraph()
-    dot.attr("node", shape="circle")
-    add_node_edges(dot, root)
-    return dot
+    graph = Digraph()
+    graph.attr("node", shape="circle")
+    add_node_edges(graph, root)
+    return graph
 
 
 def normalize_sequence(seq: list[str]) -> list[str]:
@@ -65,14 +65,14 @@ def display_png_file(path: str):
 def main(seq):
     seq = normalize_sequence(seq)
     root = build_tree(seq)
-    graph = draw(root)
+    graph = build_graph(root)
 
     if graph is None:
-        return
+        print("empty tree")
+    else:
+        out_file = tempfile.NamedTemporaryFile(delete=False)
+        out_file.close()
+        out_path = f"{out_file.name}.png"
 
-    out_file = tempfile.NamedTemporaryFile(delete=False)
-    out_file.close()
-    out_path = f"{out_file.name}.png"
-
-    graph.render(filename=out_file.name, format="png", cleanup=True)
-    display_png_file(out_path)
+        graph.render(filename=out_file.name, format="png", cleanup=True)
+        display_png_file(out_path)
