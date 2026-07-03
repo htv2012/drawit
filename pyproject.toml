@@ -1,28 +1,18 @@
 [project]
 name = "drawit"
-version = "0.2.0"
+version = "0.3.0"
 description = "Draw a binary tree"
 readme = "README.md"
-authors = [
-    { name = "Hai Vu", email = "haivu2004@gmail.com" }
-]
+authors = [{ name = "Hai Vu", email = "haivu2004@gmail.com" }]
 requires-python = ">=3.13"
-dependencies = [
-    "click>=8.4.2",
-    "drawtree>=0.1.2",
-]
+dependencies = ["click>=8.4.2", "drawtree>=0.1.2", "graphviz>=0.21"]
 
 [project.scripts]
-drawit = "drawit:main"
+drawtree = "drawit.drawtree:main"
 
 [build-system]
 requires = ["uv_build>=0.9.21,<0.10.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-dev = [
-    "ipython>=9.15.0",
-    "pytest>=9.1.1",
-    "ruff>=0.15.20",
-    "ty>=0.0.55",
-]
+dev = ["ipython>=9.15.0", "pytest>=9.1.1", "ruff>=0.15.20", "ty>=0.0.55"]
