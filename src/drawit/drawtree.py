@@ -1,6 +1,7 @@
-import shutil
 import json
-import subprocess, os
+import os
+import shutil
+import subprocess
 import tempfile
 import webbrowser
 from typing import Optional
