@@ -18,14 +18,18 @@ def build_drawing_specifications(root: TreeNode) -> dict:
     node_size = 800
     font_size = 10
     if depth > 6:
-        node_size = 20
-        font_size = 2
-    elif depth > 4:
-        node_size = 100
+        node_size = 200
         font_size = 3
+    elif depth > 4:
+        node_size = 400
+        font_size = 6
 
     return dict(
-        node_size=node_size, font_size=font_size, node_color="DodgerBlue", arrows=True
+        node_size=node_size,
+        font_size=font_size,
+        node_color="LightBlue",
+        arrows=True,
+        font_weight="bold",
     )
 
 
