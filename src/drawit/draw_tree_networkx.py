@@ -9,7 +9,7 @@ import click
 import matplotlib.pyplot as plt
 import networkx as nx
 
-from .tree import TreeNode, build_tree, max_depth
+from .tree import TreeNode, build_binary_search_tree, build_tree, max_depth, serialize
 from .version import __version__
 
 
@@ -106,18 +106,24 @@ def normalize_sequence(seq: list[str]) -> list[str]:
 @click.command
 @click.version_option(__version__)
 @click.option("-w", "--web", is_flag=True, default=False)
+@click.option("--bst", is_flag=True, default=False)
 @click.argument("seq", nargs=-1)
-def main(web, seq):
+def main(bst, web, seq):
     seq = normalize_sequence(seq)
     if not seq:
         print("Empty tree")
         return
-    print(f"root: {json.dumps(seq)}")
 
     out_file = tempfile.NamedTemporaryFile(delete=False)
     out_file.close()
     out_path = f"{out_file.name}.png"
 
-    root = build_tree(seq)
+    if bst:
+        root = build_binary_search_tree(seq)
+    else:
+        root = build_tree(seq)
+
+    serialized = serialize(root)
+    print(f"root: {serialized}")
     draw_tree_using_networkx(root, out_path)
     display_png_file(out_path, web)
