@@ -93,6 +93,8 @@ def display_png_file(path: str, web: bool):
 
 def normalize_sequence(seq: list[str]) -> list[str]:
     def normalize(token: str):
+        if token in {"null", "None", "N", "n"}:
+            return None
         try:
             return json.loads(token)
         except json.JSONDecodeError:
@@ -110,6 +112,7 @@ def main(web, seq):
     if not seq:
         print("Empty tree")
         return
+    print(f"root: {json.dumps(seq)}")
 
     out_file = tempfile.NamedTemporaryFile(delete=False)
     out_file.close()
