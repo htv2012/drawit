@@ -1,6 +1,6 @@
 [project]
 name = "drawit"
-version = "0.5.0"
+version = "0.6.0"
 description = "Draw a binary tree"
 readme = "README.md"
 authors = [{ name = "Hai Vu", email = "haivu2004@gmail.com" }]
@@ -13,6 +13,7 @@ dependencies = [
 
 [project.scripts]
 drawtree = "drawit.draw_tree_networkx:main"
+d3 = "drawit.draw_tree_networkx:main"
 
 [build-system]
 requires = ["uv_build>=0.9.21,<0.10.0"]

@@ -75,9 +75,12 @@ def draw_tree_using_networkx(root: TreeNode, filename: str = "binary_tree.png"):
     plt.close(fig)
 
 
-def display_png_file(path: str):
+def display_png_file(path: str, web: bool):
     print(path)
-    if shutil.which("timg"):
+    if web:
+        url = f"file://{path}"
+        webbrowser.open(url)
+    elif shutil.which("timg"):
         subprocess.run(["timg", path])
     elif shutil.which("imgcat"):
         subprocess.run(["imgcat", path])
@@ -100,8 +103,9 @@ def normalize_sequence(seq: list[str]) -> list[str]:
 
 @click.command
 @click.version_option(__version__)
+@click.option("-w", "--web", is_flag=True, default=False)
 @click.argument("seq", nargs=-1)
-def main(seq):
+def main(web, seq):
     seq = normalize_sequence(seq)
     if not seq:
         print("Empty tree")
@@ -113,4 +117,4 @@ def main(seq):
 
     root = build_tree(seq)
     draw_tree_using_networkx(root, out_path)
-    display_png_file(out_path)
+    display_png_file(out_path, web)
